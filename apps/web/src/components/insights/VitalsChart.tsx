@@ -31,8 +31,8 @@ export default function VitalsChart({ vitals }: { vitals: Vital[] }) {
   });
   const data = useMemo(() => vitals.map((v) => ({ ...v })), [vitals]);
   const isEmpty = data.length === 0;
-  const { resolved } = useTheme();
-  const ct = chartTheme(resolved);
+  const { theme } = useTheme();
+  const ct = chartTheme(theme);
   return (
     <ChartCard
       title="Vitals over time"

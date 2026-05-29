@@ -15,11 +15,11 @@
 }
 
 html.dark {
-  --bg: 9 14 24;
-  --surface: 18 26 39;
+  --bg: 11 17 30;
+  --surface: 18 26 41;
   --text: 226 232 240;
-  --muted: 140 156 178;
-  --accent: 110 174 255;
+  --muted: 148 163 184;
+  --accent: 96 165 250;
   --border: 30 41 59;
   color-scheme: dark;
 }
@@ -45,7 +45,7 @@ h3 {
   letter-spacing: -0.02em;
 }
 
-/* Page background — soft radial accent in the top-right corner */
+/* Atmospheric background — two soft accent washes that read in both modes */
 body::before {
   content: "";
   position: fixed;
@@ -53,15 +53,35 @@ body::before {
   pointer-events: none;
   background:
     radial-gradient(
-      80rem 40rem at 110% -10%,
-      rgb(var(--accent) / 0.08),
+      90rem 45rem at 110% -10%,
+      rgb(var(--accent) / 0.12),
       transparent 60%
     ),
     radial-gradient(
-      60rem 30rem at -10% 110%,
-      rgb(var(--accent) / 0.05),
+      70rem 35rem at -10% 110%,
+      rgb(var(--accent) / 0.08),
       transparent 60%
     );
   z-index: -1;
+}
+
+html.dark body::before {
+  background:
+    radial-gradient(
+      90rem 50rem at 110% -10%,
+      rgb(var(--accent) / 0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      70rem 40rem at -10% 110%,
+      rgb(var(--accent) / 0.1),
+      transparent 60%
+    ),
+    linear-gradient(
+      180deg,
+      rgb(var(--bg)) 0%,
+      rgb(var(--bg)) 60%,
+      rgb(7 12 22) 100%
+    );
 }
 

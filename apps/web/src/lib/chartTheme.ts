@@ -1,4 +1,4 @@
-import type { ResolvedTheme } from "./theme.js";
+import type { Theme } from "./theme.js";
 
 export interface ChartTheme {
   grid: string;
@@ -10,8 +10,8 @@ export interface ChartTheme {
   cursor: string;
 }
 
-export function chartTheme(resolved: ResolvedTheme): ChartTheme {
-  if (resolved === "dark") {
+export function chartTheme(theme: Theme): ChartTheme {
+  if (theme === "dark") {
     return {
       grid: "rgb(255 255 255 / 0.08)",
       axis: "rgb(148 163 184)",

@@ -7,9 +7,9 @@ import { useTheme } from "../lib/theme.js";
 
 export default function AuthPage() {
   const user = useAuthStore((s) => s.user);
-  const { resolved } = useTheme();
+  const { theme } = useTheme();
   if (user) return <Navigate to="/dashboard" replace />;
-  const isDark = resolved === "dark";
+  const isDark = theme === "dark";
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-6 py-12">
       <Link

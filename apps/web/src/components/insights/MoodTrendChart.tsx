@@ -15,8 +15,8 @@ import { chartTheme } from "../../lib/chartTheme.js";
 
 export default function MoodTrendChart({ mood }: { mood: MoodLog[] }) {
   const isEmpty = mood.length === 0;
-  const { resolved } = useTheme();
-  const ct = chartTheme(resolved);
+  const { theme } = useTheme();
+  const ct = chartTheme(theme);
   return (
     <section className="rounded-xl border border-border bg-bg p-6 shadow-card">
       <header className="mb-5">

@@ -7,68 +7,48 @@ import {
   type ReactNode,
 } from "react";
 
-export type ThemeMode = "system" | "light" | "dark";
-export type ResolvedTheme = "light" | "dark";
+export type Theme = "light" | "dark";
 
 const STORAGE_KEY = "hp.theme";
 
 interface ThemeCtx {
-  mode: ThemeMode;
-  resolved: ResolvedTheme;
-  setMode: (m: ThemeMode) => void;
+  theme: Theme;
+  setTheme: (t: Theme) => void;
+  toggle: () => void;
 }
 
 const Ctx = createContext<ThemeCtx | null>(null);
 
-function readStored(): ThemeMode {
-  if (typeof window === "undefined") return "system";
+function readStored(): Theme {
+  if (typeof window === "undefined") return "light";
   const v = localStorage.getItem(STORAGE_KEY);
-  if (v === "light" || v === "dark" || v === "system") return v;
-  return "system";
+  if (v === "light" || v === "dark") return v;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
 }
 
-function systemPrefersDark(): boolean {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches;
-}
-
-function resolve(mode: ThemeMode): ResolvedTheme {
-  if (mode === "system") return systemPrefersDark() ? "dark" : "light";
-  return mode;
-}
-
-function apply(resolved: ResolvedTheme) {
+function apply(theme: Theme) {
   if (typeof document === "undefined") return;
-  document.documentElement.classList.toggle("dark", resolved === "dark");
+  document.documentElement.classList.toggle("dark", theme === "dark");
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const initial = readStored();
-  const [mode, setModeState] = useState<ThemeMode>(initial);
-  const [resolved, setResolved] = useState<ResolvedTheme>(() => resolve(initial));
+  const [theme, setThemeState] = useState<Theme>(() => readStored());
 
   useEffect(() => {
-    const r = resolve(mode);
-    setResolved(r);
-    apply(r);
-    localStorage.setItem(STORAGE_KEY, mode);
-  }, [mode]);
-
-  useEffect(() => {
-    if (mode !== "system") return;
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = () => {
-      const r = resolve("system");
-      setResolved(r);
-      apply(r);
-    };
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, [mode]);
+    apply(theme);
+    localStorage.setItem(STORAGE_KEY, theme);
+  }, [theme]);
 
   const value = useMemo<ThemeCtx>(
-    () => ({ mode, resolved, setMode: setModeState }),
-    [mode, resolved],
+    () => ({
+      theme,
+      setTheme: setThemeState,
+      toggle: () =>
+        setThemeState((t) => (t === "dark" ? "light" : "dark")),
+    }),
+    [theme],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
