@@ -1,9 +1,20 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { Entries, Vitals, Mood, Wellbeing } from "@healthpulse/api-client";
 import { todayISO } from "@healthpulse/shared";
 import { apiConfig } from "../lib/apiConfig.js";
 import { computeStreak } from "../lib/wellbeingStreak.js";
+import Illustration from "../components/Illustration.js";
+
+const grid = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.15 } },
+};
+const item = {
+  hidden: { opacity: 0, y: 14 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export default function DashboardPage() {
   const today = todayISO();
@@ -31,7 +42,12 @@ export default function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-10 px-6 py-12">
-      <header className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <motion.header
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
+      >
         <div>
           <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted">
             {new Date(today).toLocaleDateString(undefined, {
@@ -50,9 +66,14 @@ export default function DashboardPage() {
         >
           Log today
         </Link>
-      </header>
+      </motion.header>
 
-      <section className="grid gap-4 md:grid-cols-4">
+      <motion.section
+        variants={grid}
+        initial="hidden"
+        animate="visible"
+        className="grid gap-4 md:grid-cols-4"
+      >
         <StatCard label="Total entries" value={String(totalEntries)} />
         <StatCard
           label="Wellbeing streak"
@@ -68,10 +89,19 @@ export default function DashboardPage() {
             latestMood?.sleep_hours != null ? `${latestMood.sleep_hours} h` : "—"
           }
         />
-      </section>
+      </motion.section>
 
-      <div className="grid gap-6 md:grid-cols-3">
-        <section className="md:col-span-2 rounded-xl border border-border bg-bg p-6 shadow-card">
+      <motion.div
+        variants={grid}
+        initial="hidden"
+        animate="visible"
+        className="grid gap-6 md:grid-cols-3"
+      >
+        <motion.section
+          variants={item}
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          className="md:col-span-2 rounded-xl border border-border bg-bg p-6 shadow-card"
+        >
           <div className="mb-5 flex items-center justify-between">
             <h2 className="text-sm font-medium uppercase tracking-[0.18em] text-muted">
               Recent entries
@@ -114,17 +144,22 @@ export default function DashboardPage() {
               ))}
             </ul>
           )}
-        </section>
+        </motion.section>
 
-        <section className="rounded-xl border border-border bg-surface p-6 shadow-card">
+        <motion.section
+          variants={item}
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          className="relative overflow-hidden rounded-xl border border-border bg-surface p-6 shadow-card"
+        >
+          <div className="pointer-events-none absolute -right-4 -top-4 text-accent/15">
+            <Illustration name="leaf" width={120} height={120} />
+          </div>
           <h2 className="text-sm font-medium uppercase tracking-[0.18em] text-muted">
             Wellbeing
           </h2>
           <p className="mt-4 text-3xl font-light tracking-tight text-text">
             {streak}
-            <span className="ml-2 text-base text-muted">
-              {streak === 1 ? "day streak" : "day streak"}
-            </span>
+            <span className="ml-2 text-base text-muted">day streak</span>
           </p>
           {todayEntry ? (
             <p className="mt-3 text-sm text-muted">
@@ -134,9 +169,7 @@ export default function DashboardPage() {
               </span>
             </p>
           ) : (
-            <p className="mt-3 text-sm text-muted">
-              No entry today yet.
-            </p>
+            <p className="mt-3 text-sm text-muted">No entry today yet.</p>
           )}
           <Link
             to="/journal/wellbeing"
@@ -145,20 +178,25 @@ export default function DashboardPage() {
             {todayEntry ? "Edit today's entry" : "Write today's entry"}
             <span aria-hidden>→</span>
           </Link>
-        </section>
-      </div>
+        </motion.section>
+      </motion.div>
     </div>
   );
 }
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-border bg-bg p-5 shadow-card">
+    <motion.div
+      variants={item}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      whileHover={{ y: -2 }}
+      className="rounded-xl border border-border bg-bg p-5 shadow-card transition-shadow hover:shadow-cardHover"
+    >
       <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted">
         {label}
       </p>
       <p className="mt-3 text-2xl font-light tracking-tight text-text">{value}</p>
-    </div>
+    </motion.div>
   );
 }
 
@@ -173,6 +211,9 @@ function EmptyState({
 }) {
   return (
     <div className="rounded-lg border border-dashed border-border p-8 text-center">
+      <div className="mx-auto mb-3 inline-flex text-muted/40">
+        <Illustration name="robot" width={64} height={64} />
+      </div>
       <p className="text-base font-medium text-text">{title}</p>
       <p className="mt-1 text-sm text-muted">{body}</p>
       <Link

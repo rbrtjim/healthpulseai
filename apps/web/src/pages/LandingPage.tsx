@@ -1,12 +1,46 @@
 import { Link, Navigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useAuthStore } from "@healthpulse/store";
+import Illustration from "../components/Illustration.js";
+
+type IconName = "robot" | "pulse" | "constellation";
+
+const FEATURES: { tag: string; title: string; body: string; icon: IconName }[] = [
+  {
+    tag: "01",
+    title: "Structured journaling",
+    body: "Symptoms, vitals, mood and sleep — captured fast in a single daily form. No clutter, no nagging.",
+    icon: "pulse",
+  },
+  {
+    tag: "02",
+    title: "Claude-powered analysis",
+    body: "Retrieval-augmented context of your last week of entries, returned as structured insights with explicit urgency levels.",
+    icon: "robot",
+  },
+  {
+    tag: "03",
+    title: "Trends you can see",
+    body: "Vitals over time, a 90-day symptom heatmap, and correlation cards that link sleep to next-day symptoms.",
+    icon: "constellation",
+  },
+];
 
 export default function LandingPage() {
   const user = useAuthStore((s) => s.user);
   if (user) return <Navigate to="/dashboard" replace />;
   return (
     <section className="relative mx-auto flex max-w-6xl flex-col items-start gap-16 px-6 py-24 md:py-32">
-      <div className="max-w-3xl">
+      <div className="pointer-events-none absolute right-4 top-4 hidden text-muted/30 md:block">
+        <Illustration name="moon-stars" width={140} height={140} />
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="max-w-3xl"
+      >
         <p className="mb-6 text-xs font-medium uppercase tracking-[0.22em] text-muted">
           Symptom checker · Health journal · AI insights
         </p>
@@ -36,42 +70,41 @@ export default function LandingPage() {
             View source
           </a>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="grid w-full gap-4 md:grid-cols-3">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: {},
+          visible: { transition: { staggerChildren: 0.08, delayChildren: 0.3 } },
+        }}
+        className="grid w-full gap-4 md:grid-cols-3"
+      >
         {FEATURES.map((f) => (
-          <article
+          <motion.article
             key={f.title}
-            className="group rounded-xl border border-border bg-bg p-6 transition hover:border-accent/40 hover:shadow-cardHover"
+            variants={{
+              hidden: { opacity: 0, y: 18 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            whileHover={{ y: -3 }}
+            className="group rounded-xl border border-border bg-bg p-6 transition-shadow hover:border-accent/40 hover:shadow-cardHover"
           >
-            <div className="mb-4 inline-flex h-9 w-9 items-center justify-center rounded-md bg-accent/10 font-medium text-accent">
-              {f.tag}
+            <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-md bg-accent/10 text-accent">
+              <Illustration name={f.icon} width={22} height={22} />
             </div>
-            <h3 className="text-lg font-medium tracking-tight text-text">
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted">
+              {f.tag}
+            </p>
+            <h3 className="mt-1 text-lg font-medium tracking-tight text-text">
               {f.title}
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-muted">{f.body}</p>
-          </article>
+          </motion.article>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }
-
-const FEATURES = [
-  {
-    tag: "01",
-    title: "Structured journaling",
-    body: "Symptoms, vitals, mood and sleep — captured fast in a single daily form. No clutter, no nagging.",
-  },
-  {
-    tag: "02",
-    title: "Claude-powered analysis",
-    body: "Retrieval-augmented context of your last week of entries, returned as structured insights with explicit urgency levels.",
-  },
-  {
-    tag: "03",
-    title: "Trends you can see",
-    body: "Vitals over time, a 90-day symptom heatmap, and correlation cards that link sleep to next-day symptoms.",
-  },
-];
