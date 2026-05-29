@@ -6,21 +6,41 @@ import { apiConfig } from "../lib/apiConfig.js";
 
 type Tab = "health" | "wellbeing";
 
+const TABS: { id: Tab; label: string }[] = [
+  { id: "health", label: "Health" },
+  { id: "wellbeing", label: "Wellbeing" },
+];
+
 export default function HistoryPage() {
   const [tab, setTab] = useState<Tab>("health");
   return (
-    <div className="mx-auto max-w-3xl p-6">
-      <h1 className="text-2xl font-bold mb-4">History</h1>
-      <div className="mb-4 flex gap-2 border-b">
-        {(["health", "wellbeing"] as Tab[]).map((t) => (
+    <div className="mx-auto max-w-3xl space-y-8 px-6 py-12">
+      <header>
+        <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted">
+          Past entries
+        </p>
+        <h1 className="mt-2 text-4xl font-light tracking-tight text-text">
+          History
+        </h1>
+      </header>
+      <div className="flex gap-8 border-b border-border">
+        {TABS.map((t) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
-            className={`px-4 py-2 ${
-              tab === t ? "border-b-2 border-brand-500 font-semibold" : ""
+            key={t.id}
+            onClick={() => setTab(t.id)}
+            className={`relative -mb-px pb-3 text-sm transition ${
+              tab === t.id
+                ? "text-text"
+                : "text-muted hover:text-text"
             }`}
           >
-            {t === "health" ? "Health" : "Wellbeing"}
+            {t.label}
+            {tab === t.id && (
+              <span
+                aria-hidden
+                className="absolute inset-x-0 bottom-0 h-px bg-accent"
+              />
+            )}
           </button>
         ))}
       </div>
@@ -34,19 +54,34 @@ function HealthList() {
     queryKey: ["entries"],
     queryFn: () => Entries.listEntries(apiConfig, 1, 50),
   });
-  if (isLoading) return <p>Loading…</p>;
-  if (!data || data.entries.length === 0)
-    return <p className="text-slate-500">No entries yet.</p>;
+  if (isLoading) return <p className="text-muted">Loading…</p>;
+  if (!data || data.entries.length === 0) {
+    return (
+      <p className="rounded-md border border-dashed border-border bg-surface/60 px-4 py-8 text-center text-sm text-muted">
+        No entries yet.
+      </p>
+    );
+  }
   return (
-    <ul className="space-y-2">
+    <ul className="divide-y divide-border rounded-xl border border-border bg-bg shadow-card">
       {data.entries.map((e) => (
-        <li key={e.id} className="rounded border p-3">
-          <Link to={`/journal/${e.id}`} className="font-semibold">
-            {e.date}
+        <li key={e.id}>
+          <Link
+            to={`/journal/${e.id}`}
+            className="group flex items-baseline justify-between gap-4 px-6 py-4 transition hover:bg-surface/50"
+          >
+            <div className="min-w-0">
+              <p className="font-medium text-text group-hover:text-accent">
+                {e.symptoms.map((s) => s.name).join(", ")}
+              </p>
+              <p className="mt-1 text-xs uppercase tracking-wider text-muted">
+                {e.symptoms.length} symptom{e.symptoms.length === 1 ? "" : "s"}
+              </p>
+            </div>
+            <time className="whitespace-nowrap text-xs uppercase tracking-wider text-muted">
+              {e.date}
+            </time>
           </Link>
-          <div className="text-sm text-slate-600">
-            {e.symptoms.map((s) => s.name).join(", ")}
-          </div>
         </li>
       ))}
     </ul>
@@ -58,19 +93,39 @@ function WellbeingList() {
     queryKey: ["wellbeing"],
     queryFn: () => Wellbeing.listWellbeing(apiConfig, 1, 50),
   });
-  if (isLoading) return <p>Loading…</p>;
-  if (!data || data.entries.length === 0)
-    return <p className="text-slate-500">No entries yet.</p>;
+  if (isLoading) return <p className="text-muted">Loading…</p>;
+  if (!data || data.entries.length === 0) {
+    return (
+      <p className="rounded-md border border-dashed border-border bg-surface/60 px-4 py-8 text-center text-sm text-muted">
+        No entries yet.
+      </p>
+    );
+  }
   return (
-    <ul className="space-y-2">
+    <ul className="divide-y divide-border rounded-xl border border-border bg-bg shadow-card">
       {data.entries.map((e) => (
-        <li key={e.id} className="rounded border p-3">
-          <Link to={`/journal/wellbeing/${e.date}`} className="font-semibold">
-            {e.date}
+        <li key={e.id}>
+          <Link
+            to={`/journal/wellbeing/${e.date}`}
+            className="group flex items-baseline justify-between gap-4 px-6 py-4 transition hover:bg-surface/50"
+          >
+            <div className="min-w-0">
+              <p className="font-medium text-text group-hover:text-accent">
+                {e.gratitude_things[0] ?? "Saved entry"}
+              </p>
+              <p className="mt-1 text-xs uppercase tracking-wider text-muted">
+                {e.gratitude_things.length +
+                  e.gratitude_people.length +
+                  e.goals_short_term.length +
+                  e.goals_long_term.length +
+                  e.tomorrow_tasks.length}{" "}
+                items
+              </p>
+            </div>
+            <time className="whitespace-nowrap text-xs uppercase tracking-wider text-muted">
+              {e.date}
+            </time>
           </Link>
-          <div className="text-sm text-slate-600">
-            {e.gratitude_things[0] ?? "—"}
-          </div>
         </li>
       ))}
     </ul>

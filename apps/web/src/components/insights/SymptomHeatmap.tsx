@@ -1,7 +1,8 @@
 import { useMemo } from "react";
 import type { SymptomEntry } from "@healthpulse/shared";
 
-const DAYS = 90;
+const DAYS = 91;
+const COLS = 13;
 
 interface Cell {
   date: string;
@@ -25,31 +26,60 @@ function buildGrid(entries: SymptomEntry[]): Cell[] {
 }
 
 function colorFor(n: number): string {
-  if (n === 0) return "#e2e8f0";
-  if (n === 1) return "#bae6fd";
-  if (n === 2) return "#60a5fa";
-  if (n <= 4) return "#2563eb";
-  return "#1e3a8a";
+  if (n === 0) return "rgb(244 246 248)";
+  if (n === 1) return "rgb(30 79 168 / 0.18)";
+  if (n === 2) return "rgb(30 79 168 / 0.36)";
+  if (n <= 4) return "rgb(30 79 168 / 0.6)";
+  return "rgb(30 79 168)";
 }
 
 export default function SymptomHeatmap({ entries }: { entries: SymptomEntry[] }) {
   const grid = useMemo(() => buildGrid(entries), [entries]);
+  const total = grid.reduce((acc, c) => acc + c.count, 0);
+  const activeDays = grid.filter((c) => c.count > 0).length;
   return (
-    <div className="rounded border bg-white p-4">
-      <h3 className="font-semibold mb-2">Last 90 days</h3>
+    <section className="rounded-xl border border-border bg-bg p-6 shadow-card">
+      <header className="mb-5 flex items-end justify-between">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted">
+            Symptom frequency · 90 days
+          </p>
+          <p className="mt-1 text-sm text-muted">
+            {total} symptom{total === 1 ? "" : "s"} across {activeDays} day
+            {activeDays === 1 ? "" : "s"}.
+          </p>
+        </div>
+        <Legend />
+      </header>
       <div
         className="grid gap-1"
-        style={{ gridTemplateColumns: "repeat(15, 1fr)" }}
+        style={{ gridTemplateColumns: `repeat(${COLS}, minmax(0, 1fr))` }}
       >
         {grid.map((cell) => (
           <div
             key={cell.date}
-            title={`${cell.date}: ${cell.count} symptom(s)`}
-            className="aspect-square rounded"
+            title={`${cell.date}: ${cell.count} symptom${cell.count === 1 ? "" : "s"}`}
+            className="aspect-square rounded-[3px]"
             style={{ background: colorFor(cell.count) }}
           />
         ))}
       </div>
+    </section>
+  );
+}
+
+function Legend() {
+  return (
+    <div className="flex items-center gap-1.5 text-xs text-muted">
+      <span>Less</span>
+      {[0, 1, 2, 4, 5].map((n) => (
+        <span
+          key={n}
+          className="h-3 w-3 rounded-[3px]"
+          style={{ background: colorFor(n) }}
+        />
+      ))}
+      <span>More</span>
     </div>
   );
 }

@@ -41,45 +41,106 @@ export default function NewEntryPage() {
   };
 
   return (
-    <form onSubmit={submit} className="mx-auto max-w-2xl space-y-8 p-6">
-      <h1 className="text-2xl font-bold">Log today — {date}</h1>
+    <form onSubmit={submit} className="mx-auto max-w-3xl space-y-10 px-6 py-12">
+      <header>
+        <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted">
+          {date}
+        </p>
+        <h1 className="mt-2 text-4xl font-light tracking-tight text-text">
+          Today's entry
+        </h1>
+        <p className="mt-2 text-sm text-muted">
+          Capture symptoms, vitals and mood. Everything but symptoms is optional.
+        </p>
+      </header>
 
-      <section>
-        <h2 className="font-semibold mb-2">Symptoms</h2>
+      <Section
+        index="01"
+        title="Symptoms"
+        hint="Press Enter after typing to add. Use the slider to set severity."
+        required
+      >
         <SymptomList value={symptoms} onChange={setSymptoms} />
-      </section>
+      </Section>
 
-      <section>
-        <h2 className="font-semibold mb-2">Vitals (optional)</h2>
+      <Section
+        index="02"
+        title="Vitals"
+        hint="All fields optional. Leave blank if you didn't measure today."
+      >
         <VitalsFields value={vital} onChange={setVital} />
-      </section>
+      </Section>
 
-      <section>
-        <h2 className="font-semibold mb-2">Mood & Sleep</h2>
+      <Section index="03" title="Mood & sleep">
         <MoodFields value={mood} onChange={setMood} />
-      </section>
+      </Section>
 
-      <section>
-        <h2 className="font-semibold mb-2">Notes</h2>
+      <Section index="04" title="Notes">
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          className="w-full rounded border px-3 py-2"
+          placeholder="Anything else worth noting — context, triggers, what helped…"
+          className="w-full resize-y rounded-md border border-border bg-bg px-3 py-2 text-text placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
           rows={4}
         />
-      </section>
+      </Section>
 
       {mutation.isError && (
-        <p className="text-red-600 text-sm">Failed to save. Try again.</p>
+        <p className="rounded-md border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+          Could not save. Try again — your inputs are still here.
+        </p>
       )}
 
-      <button
-        type="submit"
-        disabled={symptoms.length === 0 || mutation.isPending}
-        className="rounded bg-brand-500 px-6 py-3 text-white disabled:opacity-50"
-      >
-        {mutation.isPending ? "Saving..." : "Save Entry"}
-      </button>
+      <div className="sticky bottom-0 -mx-6 border-t border-border bg-bg/90 px-6 py-4 backdrop-blur-md">
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-4">
+          <p className="text-xs text-muted">
+            {symptoms.length === 0
+              ? "Add at least one symptom to save."
+              : `${symptoms.length} symptom${symptoms.length === 1 ? "" : "s"} ready to save`}
+          </p>
+          <button
+            type="submit"
+            disabled={symptoms.length === 0 || mutation.isPending}
+            className="rounded-md bg-accent px-6 py-2.5 text-sm font-medium text-white shadow-card transition hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {mutation.isPending ? "Saving…" : "Save entry"}
+          </button>
+        </div>
+      </div>
     </form>
+  );
+}
+
+function Section({
+  index,
+  title,
+  hint,
+  required,
+  children,
+}: {
+  index: string;
+  title: string;
+  hint?: string;
+  required?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="rounded-xl border border-border bg-bg p-6 shadow-card md:p-8">
+      <header className="mb-5">
+        <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted">
+          {index}
+        </p>
+        <h2 className="mt-1 text-xl font-medium tracking-tight text-text">
+          {title}
+          {required && (
+            <span className="ml-2 text-xs font-normal text-accent">
+              required
+            </span>
+          )}
+        </h2>
+        {hint && <p className="mt-1 text-sm text-muted">{hint}</p>}
+      </header>
+      {children}
+    </section>
   );
 }

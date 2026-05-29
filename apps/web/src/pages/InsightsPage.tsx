@@ -27,8 +27,20 @@ export default function InsightsPage() {
   const correlations = computeCorrelations(entries, mood);
 
   return (
-    <div className="mx-auto max-w-5xl p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Insights</h1>
+    <div className="mx-auto max-w-6xl space-y-10 px-6 py-12">
+      <header>
+        <p className="text-xs font-medium uppercase tracking-[0.22em] text-muted">
+          Trends & patterns
+        </p>
+        <h1 className="mt-2 text-4xl font-light tracking-tight text-text">
+          Insights
+        </h1>
+        <p className="mt-2 text-sm text-muted">
+          Patterns drawn from your entries — no clinical interpretation, just
+          your own data.
+        </p>
+      </header>
+
       <VitalsChart vitals={vitals} />
       <SymptomHeatmap entries={entries} />
       <MoodTrendChart mood={mood} />

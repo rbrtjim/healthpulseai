@@ -1,12 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root { height: 100%; }
-
-html.dark body {
-  background-color: #0f172a;
-  color: #e2e8f0;
+:root {
+  --bg: 255 255 255;
+  --surface: 244 246 248;
+  --text: 10 37 64;
+  --muted: 91 107 124;
+  --accent: 30 79 168;
+  --border: 226 232 239;
 }
-html.dark .bg-white { background-color: #1e293b !important; }
-html.dark .border { border-color: #334155 !important; }
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: rgb(var(--bg));
+  color: rgb(var(--text));
+  font-family: "Roboto", system-ui, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.02em;
+}
+
+/* Page background — soft radial accent in the top-right corner */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      80rem 40rem at 110% -10%,
+      rgb(var(--accent) / 0.08),
+      transparent 60%
+    ),
+    radial-gradient(
+      60rem 30rem at -10% 110%,
+      rgb(var(--accent) / 0.05),
+      transparent 60%
+    );
+  z-index: -1;
+}
+
+/* Supabase Auth UI theme overrides */
+.supabase-auth-ui_ui button[type="submit"] {
+  background-color: rgb(var(--accent)) !important;
+  border-color: rgb(var(--accent)) !important;
+  color: #fff !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em;
+}
+.supabase-auth-ui_ui button[type="submit"]:hover {
+  background-color: rgb(var(--accent) / 0.9) !important;
+}
+.supabase-auth-ui_ui input {
+  border-color: rgb(var(--border)) !important;
+  color: rgb(var(--text)) !important;
+  font-family: inherit !important;
+}
+.supabase-auth-ui_ui label {
+  color: rgb(var(--text)) !important;
+  font-weight: 500 !important;
+}
+.supabase-auth-ui_ui a {
+  color: rgb(var(--accent)) !important;
+}
