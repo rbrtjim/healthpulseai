@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: healthpulse-api
+    env: node
+    rootDir: backend
+    buildCommand: "cd .. && pnpm install --frozen-lockfile && pnpm --filter @healthpulse/backend build"
+    startCommand: "pnpm --filter @healthpulse/backend start"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_JWT_SECRET
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: AI_DAILY_RATE_LIMIT
+        value: "10"

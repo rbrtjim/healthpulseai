@@ -266,7 +266,40 @@ Make sure you have the following installed and accounts created before starting:
 
 ---
 
-*To be continued: Setup & Installation, Deployment, Available Scripts, Portfolio Highlights*
+## Setup
+
+```bash
+pnpm install
+cp .env.example .env   # then fill in Supabase + Anthropic keys
+pnpm dev:api           # backend on :3001
+pnpm dev:web           # web on :5173
+```
+
+## Scripts
+
+| Command | What it does |
+|---|---|
+| `pnpm typecheck` | Strict TypeScript across all packages |
+| `pnpm lint` | ESLint across all packages |
+| `pnpm test` | Vitest suites (shared, backend, web) |
+| `pnpm build` | Build all packages |
+| `pnpm dev:web` | Start web dev server |
+| `pnpm dev:api` | Start backend dev server (tsx watch) |
+
+## Deployment
+
+### Web (Vercel)
+1. Import the repo into Vercel.
+2. Set root to `apps/web` and use the bundled `vercel.json`.
+3. Add env vars: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_API_BASE_URL`.
+
+### Backend (Render)
+1. Create a new Web Service from this repo, pointing at `backend/render.yaml`.
+2. Set the secrets listed in the YAML in the Render dashboard.
+
+### Database (Supabase)
+1. Create a new Supabase project.
+2. Run `backend/supabase/migrations/001_initial_schema.sql` in the SQL editor.
 
 ---
 
