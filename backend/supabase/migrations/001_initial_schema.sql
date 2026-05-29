@@ -75,6 +75,12 @@ alter table mood_logs         enable row level security;
 alter table ai_analyses       enable row level security;
 alter table wellbeing_entries enable row level security;
 
+drop policy if exists "own_data_symptom"   on symptom_entries;
+drop policy if exists "own_data_vitals"    on vitals;
+drop policy if exists "own_data_mood"      on mood_logs;
+drop policy if exists "own_data_ai"        on ai_analyses;
+drop policy if exists "own_data_wellbeing" on wellbeing_entries;
+
 create policy "own_data_symptom" on symptom_entries
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 create policy "own_data_vitals" on vitals
