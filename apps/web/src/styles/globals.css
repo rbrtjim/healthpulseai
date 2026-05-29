@@ -11,6 +11,17 @@
   --muted: 91 107 124;
   --accent: 30 79 168;
   --border: 226 232 239;
+  color-scheme: light;
+}
+
+html.dark {
+  --bg: 9 14 24;
+  --surface: 18 26 39;
+  --text: 226 232 240;
+  --muted: 140 156 178;
+  --accent: 110 174 255;
+  --border: 30 41 59;
+  color-scheme: dark;
 }
 
 html,
@@ -54,26 +65,3 @@ body::before {
   z-index: -1;
 }
 
-/* Supabase Auth UI theme overrides */
-.supabase-auth-ui_ui button[type="submit"] {
-  background-color: rgb(var(--accent)) !important;
-  border-color: rgb(var(--accent)) !important;
-  color: #fff !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.01em;
-}
-.supabase-auth-ui_ui button[type="submit"]:hover {
-  background-color: rgb(var(--accent) / 0.9) !important;
-}
-.supabase-auth-ui_ui input {
-  border-color: rgb(var(--border)) !important;
-  color: rgb(var(--text)) !important;
-  font-family: inherit !important;
-}
-.supabase-auth-ui_ui label {
-  color: rgb(var(--text)) !important;
-  font-weight: 500 !important;
-}
-.supabase-auth-ui_ui a {
-  color: rgb(var(--accent)) !important;
-}

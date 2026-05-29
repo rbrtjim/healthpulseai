@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useAuthStore } from "@healthpulse/store";
 import { supabase } from "../lib/supabase.js";
+import ThemeToggle from "./ThemeToggle.js";
 
 const navLinks = [
   { to: "/dashboard", label: "Dashboard" },
@@ -45,19 +46,22 @@ export default function Layout() {
               </NavLink>
             ))}
           </nav>
-          {user && (
-            <div className="flex items-center gap-4">
-              <span className="hidden text-xs text-muted md:inline">
-                {user.email}
-              </span>
-              <button
-                onClick={signOut}
-                className="rounded-md border border-border bg-bg px-3 py-1.5 text-sm text-muted transition hover:border-text/30 hover:text-text"
-              >
-                Sign out
-              </button>
-            </div>
-          )}
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            {user && (
+              <>
+                <span className="hidden text-xs text-muted md:inline">
+                  {user.email}
+                </span>
+                <button
+                  onClick={signOut}
+                  className="rounded-md border border-border bg-bg px-3 py-1.5 text-sm text-muted transition hover:border-text/30 hover:text-text"
+                >
+                  Sign out
+                </button>
+              </>
+            )}
+          </div>
         </div>
         <nav className="border-t border-border bg-bg/60 px-6 py-2 md:hidden">
           <div className="mx-auto flex max-w-6xl gap-5 overflow-x-auto text-sm">

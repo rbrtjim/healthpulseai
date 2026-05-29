@@ -77,7 +77,7 @@ export default function SymptomList({ value, onChange }: Props) {
                 type="button"
                 onClick={() => remove(i)}
                 aria-label={`Remove ${s.name}`}
-                className="rounded-md p-1 text-muted transition hover:bg-rose-50 hover:text-rose-600"
+                className="rounded-md p-1 text-muted transition hover:bg-rose-500/10 hover:text-rose-600 dark:hover:text-rose-400"
               >
                 <svg
                   width="14"

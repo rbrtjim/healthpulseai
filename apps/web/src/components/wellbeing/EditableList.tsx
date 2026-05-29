@@ -61,7 +61,7 @@ export default function EditableList({
                 type="button"
                 onClick={() => remove(i)}
                 aria-label="Remove item"
-                className="rounded p-1 text-muted opacity-60 transition hover:bg-rose-50 hover:text-rose-600 hover:opacity-100"
+                className="rounded p-1 text-muted opacity-60 transition hover:bg-rose-500/10 hover:text-rose-600 dark:hover:text-rose-400 hover:opacity-100"
               >
                 <svg
                   width="12"

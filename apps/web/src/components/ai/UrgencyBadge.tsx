@@ -2,17 +2,17 @@ import type { UrgencyLevel } from "@healthpulse/shared";
 
 const styles: Record<UrgencyLevel, { cls: string; dot: string; label: string }> = {
   low: {
-    cls: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    cls: "bg-emerald-500/12 text-emerald-700 border-emerald-500/30 dark:text-emerald-300",
     dot: "bg-emerald-500",
     label: "No immediate concern",
   },
   moderate: {
-    cls: "bg-amber-50 text-amber-800 border-amber-200",
+    cls: "bg-amber-500/15 text-amber-800 border-amber-500/30 dark:text-amber-300",
     dot: "bg-amber-500",
     label: "Monitor symptoms",
   },
   high: {
-    cls: "bg-orange-50 text-orange-800 border-orange-200",
+    cls: "bg-orange-500/15 text-orange-800 border-orange-500/30 dark:text-orange-300",
     dot: "bg-orange-500",
     label: "Consider seeing a doctor soon",
   },

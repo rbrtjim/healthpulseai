@@ -26,11 +26,11 @@ function buildGrid(entries: SymptomEntry[]): Cell[] {
 }
 
 function colorFor(n: number): string {
-  if (n === 0) return "rgb(244 246 248)";
-  if (n === 1) return "rgb(30 79 168 / 0.18)";
-  if (n === 2) return "rgb(30 79 168 / 0.36)";
-  if (n <= 4) return "rgb(30 79 168 / 0.6)";
-  return "rgb(30 79 168)";
+  if (n === 0) return "rgb(var(--surface))";
+  if (n === 1) return "rgb(var(--accent) / 0.22)";
+  if (n === 2) return "rgb(var(--accent) / 0.45)";
+  if (n <= 4) return "rgb(var(--accent) / 0.75)";
+  return "rgb(var(--accent))";
 }
 
 export default function SymptomHeatmap({ entries }: { entries: SymptomEntry[] }) {

@@ -10,6 +10,8 @@ import {
   CartesianGrid,
 } from "recharts";
 import type { Vital } from "@healthpulse/shared";
+import { useTheme } from "../../lib/theme.js";
+import { chartTheme } from "../../lib/chartTheme.js";
 
 const METRICS = [
   { key: "heart_rate", label: "Heart rate", color: "#1E4FA8" },
@@ -29,6 +31,8 @@ export default function VitalsChart({ vitals }: { vitals: Vital[] }) {
   });
   const data = useMemo(() => vitals.map((v) => ({ ...v })), [vitals]);
   const isEmpty = data.length === 0;
+  const { resolved } = useTheme();
+  const ct = chartTheme(resolved);
   return (
     <ChartCard
       title="Vitals over time"
@@ -64,31 +68,31 @@ export default function VitalsChart({ vitals }: { vitals: Vital[] }) {
       ) : (
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data} margin={{ top: 8, right: 16, bottom: 0, left: -8 }}>
-            <CartesianGrid stroke="rgb(226 232 239)" strokeDasharray="2 4" />
+            <CartesianGrid stroke={ct.grid} strokeDasharray="2 4" />
             <XAxis
               dataKey="date"
-              stroke="rgb(91 107 124)"
-              tick={{ fontSize: 11 }}
+              stroke={ct.axis}
+              tick={{ fontSize: 11, fill: ct.axis }}
               tickLine={false}
-              axisLine={{ stroke: "rgb(226 232 239)" }}
+              axisLine={{ stroke: ct.axisLine }}
             />
             <YAxis
-              stroke="rgb(91 107 124)"
-              tick={{ fontSize: 11 }}
+              stroke={ct.axis}
+              tick={{ fontSize: 11, fill: ct.axis }}
               tickLine={false}
-              axisLine={{ stroke: "rgb(226 232 239)" }}
+              axisLine={{ stroke: ct.axisLine }}
             />
             <Tooltip
               contentStyle={{
-                background: "rgb(255 255 255)",
-                border: "1px solid rgb(226 232 239)",
+                background: ct.tooltipBg,
+                border: `1px solid ${ct.tooltipBorder}`,
                 borderRadius: 8,
                 fontSize: 12,
-                color: "rgb(10 37 64)",
+                color: ct.tooltipText,
               }}
-              cursor={{ stroke: "rgb(30 79 168)", strokeOpacity: 0.2 }}
+              cursor={{ stroke: ct.cursor, strokeWidth: 1 }}
             />
-            <Legend wrapperStyle={{ fontSize: 12, color: "rgb(91 107 124)" }} />
+            <Legend wrapperStyle={{ fontSize: 12, color: ct.axis }} />
             {METRICS.filter((m) => enabled[m.key]).map((m) => (
               <Line
                 key={m.key}

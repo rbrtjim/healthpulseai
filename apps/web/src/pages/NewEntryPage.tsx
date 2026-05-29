@@ -86,7 +86,7 @@ export default function NewEntryPage() {
       </Section>
 
       {mutation.isError && (
-        <p className="rounded-md border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+        <p className="rounded-md border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-700 dark:text-rose-300">
           Could not save. Try again — your inputs are still here.
         </p>
       )}
