@@ -1,0 +1,27 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HealthPulse AI">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2A5FBF"/>
+      <stop offset="100%" stop-color="#0F2E72"/>
+    </linearGradient>
+    <linearGradient id="heart" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E2ECFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <g transform="translate(102 102) scale(0.6)">
+    <path d="M256 384
+             C 152 304, 96 232, 112 168
+             C 124 116, 196 100, 256 156
+             C 316 100, 388 116, 400 168
+             C 416 232, 360 304, 256 384 Z"
+          fill="url(#heart)"/>
+    <path d="M96 256 H190 L210 196 L242 320 L274 192 L300 280 L320 244 H416"
+          fill="none"
+          stroke="#1E4FA8"
+          stroke-width="22"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+  </g>
+</svg>

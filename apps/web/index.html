@@ -2,8 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>HealthPulse AI</title>
+    <meta name="description" content="AI-powered health journal — log symptoms, vitals, mood and wellbeing; surface trends and Claude-powered insights." />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/pwa-icon.svg" />
+    <link rel="apple-touch-icon" href="/pwa-icon.svg" />
+    <link rel="mask-icon" href="/pwa-icon.svg" color="#1E4FA8" />
+
+    <!-- Theme color (matches navy accent in light, deep navy in dark) -->
+    <meta name="theme-color" content="#0B111E" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+
+    <!-- iOS PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="HealthPulse" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
   </head>
   <body class="bg-slate-50 text-slate-900">
     <div id="root"></div>

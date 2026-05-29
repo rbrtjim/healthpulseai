@@ -37,6 +37,13 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Prevent iOS Safari double-tap zoom on buttons */
+button {
+  touch-action: manipulation;
 }
 
 h1,

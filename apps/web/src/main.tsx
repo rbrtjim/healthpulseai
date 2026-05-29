@@ -7,6 +7,7 @@ import { queryClient } from "./lib/queryClient.js";
 import { ThemeProvider } from "./lib/theme.js";
 import AuthBridge from "./components/AuthBridge.js";
 import ErrorBoundary from "./components/ErrorBoundary.js";
+import InstallPrompt from "./components/InstallPrompt.js";
 import "./styles/globals.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <ErrorBoundary>
           <RouterProvider router={router} />
         </ErrorBoundary>
+        <InstallPrompt />
       </QueryClientProvider>
     </ThemeProvider>
   </React.StrictMode>,
