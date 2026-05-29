@@ -1,4 +1,10 @@
-import "dotenv/config";
+import { config as loadEnv } from "dotenv";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+
+const here = path.dirname(fileURLToPath(import.meta.url));
+loadEnv({ path: path.resolve(here, "../../.env") });
+loadEnv();
 
 function required(name: string): string {
   const v = process.env[name];
