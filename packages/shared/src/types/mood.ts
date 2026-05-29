@@ -3,6 +3,7 @@ export interface MoodLog {
   user_id: string;
   date: string;
   mood: number;
+  mood_secondary?: number | null;
   energy: number;
   sleep_hours?: number;
 }
@@ -10,6 +11,7 @@ export interface MoodLog {
 export interface NewMoodLog {
   date: string;
   mood: number;
+  mood_secondary?: number | null;
   energy: number;
   sleep_hours?: number;
 }

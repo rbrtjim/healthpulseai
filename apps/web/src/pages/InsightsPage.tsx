@@ -4,6 +4,7 @@ import { apiConfig } from "../lib/apiConfig.js";
 import VitalsChart from "../components/insights/VitalsChart.js";
 import SymptomHeatmap from "../components/insights/SymptomHeatmap.js";
 import MoodTrendChart from "../components/insights/MoodTrendChart.js";
+import MoodCalendar from "../components/insights/MoodCalendar.js";
 import CorrelationCards from "../components/insights/CorrelationCards.js";
 import { computeCorrelations } from "../lib/correlations.js";
 
@@ -41,6 +42,7 @@ export default function InsightsPage() {
         </p>
       </header>
 
+      <MoodCalendar mood={mood} />
       <VitalsChart vitals={vitals} />
       <SymptomHeatmap entries={entries} />
       <MoodTrendChart mood={mood} />

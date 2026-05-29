@@ -29,6 +29,7 @@ const createSchema = z.object({
     .object({
       date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
       mood: z.number().int().min(1).max(5),
+      mood_secondary: z.number().int().min(1).max(5).nullable().optional(),
       energy: z.number().int().min(1).max(5),
       sleep_hours: z.number().min(0).max(24).optional(),
     })

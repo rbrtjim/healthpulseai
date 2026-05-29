@@ -20,6 +20,7 @@ export default function NewEntryPage() {
   const [vital, setVital] = useState<VitalsValue>({});
   const [mood, setMood] = useState<MoodValue>({
     mood: 3,
+    mood_secondary: null,
     energy: 3,
     sleep_hours: undefined,
   });

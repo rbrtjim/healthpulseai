@@ -30,12 +30,13 @@ create index if not exists idx_vitals_user_date on vitals (user_id, date desc);
 
 -- mood_logs
 create table if not exists mood_logs (
-  id          uuid primary key default gen_random_uuid(),
-  user_id     uuid references auth.users not null,
-  date        date not null,
-  mood        int check (mood between 1 and 5),
-  energy      int check (energy between 1 and 5),
-  sleep_hours numeric(3,1)
+  id              uuid primary key default gen_random_uuid(),
+  user_id         uuid references auth.users not null,
+  date            date not null,
+  mood            int check (mood between 1 and 5),
+  mood_secondary  int check (mood_secondary is null or (mood_secondary between 1 and 5)),
+  energy          int check (energy between 1 and 5),
+  sleep_hours     numeric(3,1)
 );
 create index if not exists idx_mood_user_date on mood_logs (user_id, date desc);
 
