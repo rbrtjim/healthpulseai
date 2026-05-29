@@ -6,6 +6,7 @@ import { todayISO } from "@healthpulse/shared";
 import { apiConfig } from "../lib/apiConfig.js";
 import { computeStreak } from "../lib/wellbeingStreak.js";
 import Illustration from "../components/Illustration.js";
+import RobotMascot from "../components/RobotMascot.js";
 
 const grid = {
   hidden: {},
@@ -211,8 +212,8 @@ function EmptyState({
 }) {
   return (
     <div className="rounded-lg border border-dashed border-border p-8 text-center">
-      <div className="mx-auto mb-3 inline-flex text-muted/40">
-        <Illustration name="robot" width={64} height={64} />
+      <div className="mx-auto mb-3 inline-flex text-accent/60">
+        <RobotMascot size={72} />
       </div>
       <p className="text-base font-medium text-text">{title}</p>
       <p className="mt-1 text-sm text-muted">{body}</p>

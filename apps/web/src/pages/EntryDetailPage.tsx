@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { Entries, AI } from "@healthpulse/api-client";
 import { apiConfig } from "../lib/apiConfig.js";
 import AnalysisCard from "../components/ai/AnalysisCard.js";
+import RobotMascot from "../components/RobotMascot.js";
 
 function severityTint(n: number): string {
   if (n <= 3) return "text-emerald-600";
@@ -103,18 +104,23 @@ export default function EntryDetailPage() {
         {analysis ? (
           <AnalysisCard analysis={analysis} />
         ) : (
-          <div className="flex flex-col items-start gap-3 rounded-xl border border-dashed border-border bg-surface/60 p-6">
-            <p className="text-sm text-muted">
-              Get a Claude-powered read on this entry, with retrieval-augmented
-              context from your recent history.
-            </p>
-            <button
-              onClick={() => analyze.mutate()}
-              disabled={analyze.isPending}
-              className="rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-card transition hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {analyze.isPending ? "Analyzing…" : "Analyze with AI"}
-            </button>
+          <div className="flex flex-col items-center gap-4 rounded-xl border border-dashed border-border bg-surface/60 p-8 sm:flex-row sm:items-center sm:text-left">
+            <div className="text-accent/80">
+              <RobotMascot size={96} />
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <p className="text-sm text-muted">
+                Get a Claude-powered read on this entry, with
+                retrieval-augmented context from your recent history.
+              </p>
+              <button
+                onClick={() => analyze.mutate()}
+                disabled={analyze.isPending}
+                className="mt-3 rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-card transition hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {analyze.isPending ? "Analyzing…" : "Analyze with AI"}
+              </button>
+            </div>
           </div>
         )}
         {analyze.isError && (

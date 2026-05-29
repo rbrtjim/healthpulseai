@@ -37,18 +37,33 @@ export default function Illustration({
           width={width}
           height={height}
           className={className}
-          {...common}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1.4}
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
-          <path d="M60 18v8" />
-          <circle cx="60" cy="16" r="2" />
-          <rect x="28" y="30" width="64" height="50" rx="8" />
-          <circle cx="46" cy="50" r="4" />
-          <circle cx="74" cy="50" r="4" />
-          <path d="M46 66c4 4 24 4 28 0" />
-          <path d="M28 56h-6m76 0h6" />
-          <rect x="50" y="80" width="20" height="14" rx="2" />
-          <path d="M44 94v8m32-8v8" />
-          <path d="M40 102h8m24 0h8" />
+          {/* antenna */}
+          <path d="M60 28V20" />
+          <circle cx="60" cy="17" r="1.8" />
+          {/* head */}
+          <rect x="22" y="30" width="76" height="52" rx="9" />
+          {/* side speakers */}
+          <rect x="10" y="44" width="12" height="22" rx="2.5" />
+          <rect x="98" y="44" width="12" height="22" rx="2.5" />
+          {/* inner face panel — subtle, hints at a screen */}
+          <rect x="30" y="40" width="60" height="32" rx="5" opacity="0.45" />
+          {/* eyes */}
+          <circle cx="46" cy="54" r="3.2" />
+          <circle cx="74" cy="54" r="3.2" />
+          {/* smile */}
+          <path d="M48 64q12 8 24 0" />
+          {/* legs */}
+          <path d="M42 82v10" />
+          <path d="M78 82v10" />
+          {/* feet */}
+          <path d="M36 92h12" />
+          <path d="M72 92h12" />
         </svg>
       );
     case "planet":
