@@ -1,11 +1,11 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuthStore } from "@healthpulse/store";
-import { supabase } from "../lib/supabase.js";
 import ThemeToggle from "./ThemeToggle.js";
 import Illustration from "./Illustration.js";
 import RouteAura from "./RouteAura.js";
 import PageTransition from "./PageTransition.js";
+import Avatar from "./Avatar.js";
 
 const navLinks = [
   { to: "/dashboard", label: "Dashboard" },
@@ -17,17 +17,12 @@ const navLinks = [
 
 export default function Layout() {
   const user = useAuthStore((s) => s.user);
-  const clear = useAuthStore((s) => s.clear);
   const { pathname } = useLocation();
   const activeIndex = navLinks.findIndex(
     (l) =>
       pathname === l.to ||
       (l.to !== "/dashboard" && pathname.startsWith(l.to)),
   );
-  const signOut = async () => {
-    await supabase.auth.signOut();
-    clear();
-  };
   return (
     <>
       <RouteAura />
@@ -82,17 +77,23 @@ export default function Layout() {
             <div className="flex items-center gap-3">
               <ThemeToggle />
               {user && (
-                <>
-                  <span className="hidden text-xs text-muted md:inline">
-                    {user.email}
-                  </span>
-                  <button
-                    onClick={signOut}
-                    className="rounded-md border border-border bg-bg px-3 py-1.5 text-sm text-muted transition hover:border-text/30 hover:text-text"
-                  >
-                    Sign out
-                  </button>
-                </>
+                <NavLink
+                  to="/account"
+                  aria-label="Open account settings"
+                  className={({ isActive }) =>
+                    `inline-flex rounded-full transition focus:outline-none focus:ring-2 focus:ring-accent/40 ${
+                      isActive ? "ring-2 ring-accent/40" : ""
+                    }`
+                  }
+                >
+                  <Avatar
+                    src={user.avatar_url}
+                    email={user.email}
+                    name={user.display_name}
+                    size={36}
+                    className="hover:border-accent"
+                  />
+                </NavLink>
               )}
             </div>
           </div>

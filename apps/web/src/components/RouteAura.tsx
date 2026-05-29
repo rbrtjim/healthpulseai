@@ -16,6 +16,7 @@ const AURAS: Record<string, Aura> = {
   "/journal/wellbeing": { from: "#22C55E", to: "#15803D" },
   "/history": { from: "#F472B6", to: "#9D174D" },
   "/insights": { from: "#FBBF24", to: "#B45309" },
+  "/account": { from: "#A78BFA", to: "#4F46E5" },
 };
 
 function pickAura(pathname: string): Aura {

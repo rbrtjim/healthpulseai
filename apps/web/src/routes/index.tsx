@@ -10,6 +10,7 @@ import WellbeingPage from "../pages/WellbeingPage.js";
 import WellbeingDetailPage from "../pages/WellbeingDetailPage.js";
 import HistoryPage from "../pages/HistoryPage.js";
 import InsightsPage from "../pages/InsightsPage.js";
+import AccountPage from "../pages/AccountPage.js";
 import NotFoundPage from "../pages/NotFoundPage.js";
 
 const routes: RouteObject[] = [
@@ -28,6 +29,7 @@ const routes: RouteObject[] = [
           { path: "/journal/wellbeing/:date", element: <WellbeingDetailPage /> },
           { path: "/history", element: <HistoryPage /> },
           { path: "/insights", element: <InsightsPage /> },
+          { path: "/account", element: <AccountPage /> },
         ],
       },
     ],
