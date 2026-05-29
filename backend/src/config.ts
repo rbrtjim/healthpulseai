@@ -12,7 +12,6 @@ export const config = {
   supabase: {
     url: required("SUPABASE_URL"),
     serviceRoleKey: required("SUPABASE_SERVICE_ROLE_KEY"),
-    jwtSecret: required("SUPABASE_JWT_SECRET"),
   },
   anthropic: {
     apiKey: required("ANTHROPIC_API_KEY"),
