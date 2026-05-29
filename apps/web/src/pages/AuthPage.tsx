@@ -93,7 +93,9 @@ export default function AuthPage() {
               },
             },
           }}
-          providers={[]}
+          providers={["google"]}
+          socialLayout="horizontal"
+          redirectTo={`${window.location.origin}/dashboard`}
           magicLink
         />
       </div>

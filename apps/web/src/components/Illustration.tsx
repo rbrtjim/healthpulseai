@@ -33,7 +33,7 @@ export default function Illustration({
     case "robot":
       return (
         <svg
-          viewBox="0 0 120 120"
+          viewBox="0 0 120 130"
           width={width}
           height={height}
           className={className}
@@ -44,26 +44,32 @@ export default function Illustration({
           strokeLinejoin="round"
         >
           {/* antenna */}
-          <path d="M60 28V20" />
-          <circle cx="60" cy="17" r="1.8" />
+          <path d="M60 22V14" />
+          <circle cx="60" cy="11" r="1.8" />
           {/* head */}
-          <rect x="22" y="30" width="76" height="52" rx="9" />
+          <rect x="22" y="24" width="76" height="52" rx="9" />
           {/* side speakers */}
-          <rect x="10" y="44" width="12" height="22" rx="2.5" />
-          <rect x="98" y="44" width="12" height="22" rx="2.5" />
-          {/* inner face panel — subtle, hints at a screen */}
-          <rect x="30" y="40" width="60" height="32" rx="5" opacity="0.45" />
+          <rect x="10" y="38" width="12" height="22" rx="2.5" />
+          <rect x="98" y="38" width="12" height="22" rx="2.5" />
+          {/* inner face screen */}
+          <rect x="30" y="34" width="60" height="32" rx="5" opacity="0.4" />
           {/* eyes */}
-          <circle cx="46" cy="54" r="3.2" />
-          <circle cx="74" cy="54" r="3.2" />
-          {/* smile */}
-          <path d="M48 64q12 8 24 0" />
+          <circle cx="46" cy="44" r="2.8" />
+          <circle cx="74" cy="44" r="2.8" />
+          {/* heartbeat ECG line across the face */}
+          <path d="M32 56h7l3-7 5 13 4-11 4 9 3-4h30" />
+          {/* neck */}
+          <path d="M52 76v6M68 76v6" />
+          {/* chest plate */}
+          <rect x="38" y="82" width="44" height="22" rx="4" />
+          {/* heart medallion on chest */}
+          <path d="M60 87.5c-1.6-3-7-2.6-7 1.4 0 2.8 7 5.6 7 5.6s7-2.8 7-5.6c0-4-5.4-4.4-7-1.4z" />
           {/* legs */}
-          <path d="M42 82v10" />
-          <path d="M78 82v10" />
+          <path d="M50 104v10" />
+          <path d="M70 104v10" />
           {/* feet */}
-          <path d="M36 92h12" />
-          <path d="M72 92h12" />
+          <path d="M44 114h12" />
+          <path d="M64 114h12" />
         </svg>
       );
     case "planet":
