@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { Entries, Vitals, Mood } from "@healthpulse/api-client";
+import { Entries, Vitals, Mood, Wellbeing } from "@healthpulse/api-client";
 import { apiConfig } from "../lib/apiConfig.js";
 import VitalsChart from "../components/insights/VitalsChart.js";
 import SymptomHeatmap from "../components/insights/SymptomHeatmap.js";
 import MoodTrendChart from "../components/insights/MoodTrendChart.js";
 import MoodCalendar from "../components/insights/MoodCalendar.js";
+import JournalCalendar from "../components/insights/JournalCalendar.js";
 import CorrelationCards from "../components/insights/CorrelationCards.js";
 import { computeCorrelations } from "../lib/correlations.js";
 
@@ -21,10 +22,15 @@ export default function InsightsPage() {
     queryKey: ["mood-all"],
     queryFn: () => Mood.listMood(apiConfig),
   });
+  const w = useQuery({
+    queryKey: ["wellbeing-all"],
+    queryFn: () => Wellbeing.listWellbeing(apiConfig, 1, 200),
+  });
 
   const entries = e.data?.entries ?? [];
   const vitals = v.data?.vitals ?? [];
   const mood = m.data?.mood ?? [];
+  const wellbeing = w.data?.entries ?? [];
   const correlations = computeCorrelations(entries, mood);
 
   return (
@@ -42,6 +48,7 @@ export default function InsightsPage() {
         </p>
       </header>
 
+      <JournalCalendar entries={entries} wellbeing={wellbeing} />
       <MoodCalendar mood={mood} />
       <VitalsChart vitals={vitals} />
       <SymptomHeatmap entries={entries} />
